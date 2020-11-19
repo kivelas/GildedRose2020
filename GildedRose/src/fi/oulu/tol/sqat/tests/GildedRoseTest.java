@@ -15,7 +15,7 @@ public class GildedRoseTest {
 	public void testTheTruth() {
 		assertTrue(true);
 	}
-	@Test
+	@Test //covers loop test with one pass through the loop
 	public void exampleTest() {
 		//create an inn, add an item, and simulate one day
 		GildedRose inn = new GildedRose();
@@ -188,4 +188,39 @@ public class GildedRoseTest {
 		//assert quality remains the same
 		assertEquals("Quality with quality 0 Brie", 51, quality);
 	}
+	
+	@Test //loop test 0 passes
+	public void testLoop0pass() {
+		//create an inn, add 0 item, and simulate one day
+		GildedRose inn = new GildedRose();
+		inn.oneDay();
+		
+		//access a list of items, get the quality
+		List<Item> items = inn.getItems();
+		int quality = -100;
+		if(! items.isEmpty()) { //check if items is empty, if not get the first item's quality
+			items.get(0).getQuality();
+		}
+		//assert quality is -100
+		assertEquals("Quality -100 with 0 loop passes", -100, quality);
+	}
+	
+	// loop test 1 pass see e.g. exampleTest()
+	
+	@Test //loop test 2 passes
+	public void testLoop2pass() {
+		//create an inn, add two items, and simulate one day
+		GildedRose inn = new GildedRose();
+		inn.setItem(new Item("+5 Dexterity Vest", 10, 20));
+		inn.setItem(new Item("Sulfuras, Hand of Ragnaros", 0, 80));
+		inn.oneDay();
+		
+		//access a list of items, get the quality of the second set
+		List<Item> items = inn.getItems();
+		int quality = items.get(1).getQuality();
+		
+		//assert quality remains the same
+		assertEquals("Failed quality for Sulfuras", 80, quality);
+	}
+	
 }
